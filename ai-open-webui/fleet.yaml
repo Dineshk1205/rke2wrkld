@@ -28,5 +28,5 @@ helm:
       size: 5Gi
     ingress:
       enabled: true
-      class: nginx
+      class: traefik
       host: ai.gpu.lab
