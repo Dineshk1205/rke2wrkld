@@ -1,0 +1,12 @@
+defaultNamespace: metallb-system
+labels:
+  app: metallb
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: privileged
+  pod-security.kubernetes.io/audit: privileged
+  pod-security.kubernetes.io/warn: privileged
+helm:
+  releaseName: metallb
+  repo: https://metallb.github.io/metallb
+  chart: metallb
+  version: 0.16.2

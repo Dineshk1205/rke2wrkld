@@ -1,0 +1,19 @@
+defaultNamespace: longhorn-system
+labels:
+  app: longhorn
+helm:
+  releaseName: longhorn
+  repo: https://charts.longhorn.io
+  chart: longhorn
+  version: 1.13.0
+  values:
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 2
+      reclaimPolicy: Retain
+    defaultSettings:
+      defaultDataPath: /var/lib/longhorn/
+      storageReservedPercentageForDefaultDisk: 10
+      defaultReplicaCount:
+        v1: "2"
+        v2: "2"

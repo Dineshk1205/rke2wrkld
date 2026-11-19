@@ -1,0 +1,22 @@
+defaultNamespace: gpu-operator
+labels:
+  app: gpu-operator
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: privileged
+  pod-security.kubernetes.io/audit: privileged
+  pod-security.kubernetes.io/warn: privileged
+helm:
+  releaseName: gpu-operator
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.7.2
+  values:
+    driver:
+      enabled: false
+    toolkit:
+      env:
+        - name: CONTAINERD_SOCKET
+          value: /run/k3s/containerd/containerd.sock
+    dcgmExporter:
+      serviceMonitor:
+        enabled: false
