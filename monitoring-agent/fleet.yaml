@@ -1,0 +1,56 @@
+defaultNamespace: cattle-monitoring-system
+labels:
+  app: monitoring-agent
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: privileged
+  pod-security.kubernetes.io/audit: privileged
+  pod-security.kubernetes.io/warn: privileged
+helm:
+  releaseName: kube-prometheus-stack
+  repo: https://prometheus-community.github.io/helm-charts
+  chart: kube-prometheus-stack
+  version: 93.4.0
+  values:
+    grafana:
+      enabled: false
+    alertmanager:
+      enabled: false
+    defaultRules:
+      create: false
+    kubeEtcd:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    prometheus-node-exporter:
+      tolerations:
+        - operator: Exists
+    prometheus:
+      agentMode: true
+      prometheusSpec:
+        externalLabels:
+          cluster: ai-prod
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            memory: 2Gi
+        remoteWrite:
+          - url: https://prom-write.gpu.lab/api/v1/write
+            basicAuth:
+              username:
+                name: prom-remote-write
+                key: username
+              password:
+                name: prom-remote-write
+                key: password
+            tlsConfig:
+              insecureSkipVerify: true
