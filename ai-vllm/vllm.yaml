@@ -30,13 +30,13 @@ spec:
       labels:
         app: vllm
     spec:
+      enableServiceLinks: false
       nodeSelector:
         kubernetes.io/hostname: wrkldc05
       containers:
         - name: vllm
           image: vllm/vllm-openai:v0.34.0
           args:
-            - --model
             - Qwen/Qwen2.5-1.5B-Instruct
             - --served-model-name
             - qwen2.5-1.5b-instruct
