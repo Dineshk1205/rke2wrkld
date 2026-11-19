@@ -20,6 +20,7 @@ helm:
         pull:
           - llama3.2:3b
           - qwen2.5:7b
+          - nomic-embed-text
     persistentVolume:
       enabled: true
       storageClass: longhorn

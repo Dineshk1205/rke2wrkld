@@ -1,6 +1,10 @@
 defaultNamespace: ai
 labels:
   app: ai-open-webui
+dependsOn:
+  - selector:
+      matchLabels:
+        app: ai-qdrant
 namespaceLabels:
   pod-security.kubernetes.io/enforce: baseline
   pod-security.kubernetes.io/audit: restricted
@@ -30,3 +34,14 @@ helm:
       enabled: true
       class: traefik
       host: ai.gpu.lab
+    extraEnvVars:
+      - name: VECTOR_DB
+        value: qdrant
+      - name: QDRANT_URI
+        value: http://qdrant.ai.svc.cluster.local:6333
+      - name: RAG_EMBEDDING_ENGINE
+        value: ollama
+      - name: RAG_EMBEDDING_MODEL
+        value: nomic-embed-text
+      - name: RAG_OLLAMA_BASE_URL
+        value: http://ollama.ai.svc.cluster.local:11434

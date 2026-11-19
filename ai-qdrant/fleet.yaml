@@ -1,0 +1,16 @@
+defaultNamespace: ai
+labels:
+  app: ai-qdrant
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+  pod-security.kubernetes.io/audit: restricted
+  pod-security.kubernetes.io/warn: restricted
+helm:
+  releaseName: qdrant
+  repo: https://qdrant.github.io/qdrant-helm
+  chart: qdrant
+  version: 1.20.2
+  values:
+    persistence:
+      storageClassName: longhorn
+      size: 20Gi
