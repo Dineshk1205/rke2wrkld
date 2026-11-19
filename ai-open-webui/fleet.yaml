@@ -1,0 +1,32 @@
+defaultNamespace: ai
+labels:
+  app: ai-open-webui
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+  pod-security.kubernetes.io/audit: restricted
+  pod-security.kubernetes.io/warn: restricted
+helm:
+  releaseName: open-webui
+  repo: https://helm.openwebui.com/
+  chart: open-webui
+  version: 18.4.0
+  values:
+    ollama:
+      enabled: false
+    pipelines:
+      enabled: false
+    websocket:
+      enabled: false
+    ollamaUrls:
+      - http://ollama.ai.svc.cluster.local:11434
+    enableOpenaiApi: true
+    openaiBaseApiUrl: http://vllm.ai.svc.cluster.local:8000/v1
+    openaiApiKey: none
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      size: 5Gi
+    ingress:
+      enabled: true
+      class: nginx
+      host: ai.gpu.lab

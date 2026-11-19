@@ -1,0 +1,28 @@
+defaultNamespace: ai
+labels:
+  app: ai-ollama
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+  pod-security.kubernetes.io/audit: restricted
+  pod-security.kubernetes.io/warn: restricted
+helm:
+  releaseName: ollama
+  repo: https://otwld.github.io/ollama-helm/
+  chart: ollama
+  version: 1.95.0
+  values:
+    ollama:
+      gpu:
+        enabled: true
+        type: nvidia
+        number: 1
+      models:
+        pull:
+          - llama3.2:3b
+          - qwen2.5:7b
+    persistentVolume:
+      enabled: true
+      storageClass: longhorn
+      size: 50Gi
+    nodeSelector:
+      kubernetes.io/hostname: wrkldc04
